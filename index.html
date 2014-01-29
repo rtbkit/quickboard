@@ -1,0 +1,71 @@
+
+<html>
+<head>
+    <title>RTBkit Quickboard</title>
+    <script src="http://code.jquery.com/jquery-1.9.0.min.js" type="text/javascript"></script>
+</head>
+
+<body align="center">
+
+<script language="javascript">
+    function getParams()
+    {
+        var vars = {}, hash;
+        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for(var i = 0; i < hashes.length; i++)
+        {
+            hash = decodeURIComponent(hashes[i]).split('=');
+            vars[hash[0]] = hash[1];
+        }
+        return vars;
+    }
+
+    var defaults = {
+        host: "http://graphite.host", prefix: "",
+        from: "-12hours", width: 1800, height: 250,
+    };
+
+    var config = $.extend(defaults, getParams());
+
+    var graphs =  [
+        {
+            title: "Bid Request Volume", vtitle: "QPS", yMin: 0, areaMode: "stacked",
+            target: [
+                "aliasByNode(drawAsInfinite(sum(PREFIX.router.routerUp)),-1)",
+                "groupByNode(PREFIX.router.exchange.*.requests,1,'sumSeries')"
+            ]
+        }
+    ];
+
+    $(function() {
+        var form = $("<form>");
+        $.each(config, function(key,val){
+            form.append(
+                $("<label>").text(key+": ").css("margin", "10px").append(
+                    $("<input>").attr({name: key, size: (""+val).length+2}).val(val)
+                )
+            );
+        });
+        form.append($("<input type='submit'>"))
+        $("body").append(form, $.map(graphs, function (g) {
+            var src = config.host + "/render/?";
+            src += $.param($.extend(g, config), true);
+            src = src.replace(/PREFIX/g, config.prefix);
+            return $("<img>")
+                .attr({src: src, width: config.width, height: config.height})
+                .bind("dblclick", function (e) { 
+                    window.open(src.replace("render", "composer")); 
+                });
+        }));
+
+        setInterval(function refreshImgs() {
+            $("img").each(function(){ 
+                $(this).attr("src", $(this).attr("src"));
+            });
+        }, 60*1000);
+    });
+</script>
+
+</div>
+</body>
+</html>
