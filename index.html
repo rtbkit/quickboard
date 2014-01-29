@@ -34,7 +34,61 @@
                 "aliasByNode(drawAsInfinite(sum(PREFIX.router.routerUp)),-1)",
                 "groupByNode(PREFIX.router.exchange.*.requests,1,'sumSeries')"
             ]
-        }
+        },
+        {
+            title: "Monitor", vtitle: "QPS", yMin: 0, areaMode: "all",
+            target: [
+                "aliasByNode(sum(PREFIX.router.monitor.ignoredAuctions),-1)",
+                "aliasByNode(sum(PREFIX.router.*.auctionStart),-1)",
+                "aliasByNode(drawAsInfinite(sum(PREFIX.router.monitor.systemInSlowMode)),-1)",
+                "aliasByNode(drawAsInfinite(sum(PREFIX.router.routerUp)),-1)",
+            ]
+        },
+        {
+            title: "Core Duty Cycles", vtitle: "Percent", yMin: 0, yMax: 1, hideLegend: "false",
+            target: [
+                "aliasByNode(maxSeries(PREFIX.*.loopMonitor.exchanges.*.mean),-2,-1)",
+                "aliasByNode(maxSeries(PREFIX.*.loopMonitor.routerLoop.mean),-2,-1)",
+                "aliasByNode(maxSeries(PREFIX.*.loopMonitor.augmentationLoop.mean),-2,-1)",
+                "aliasByNode(maxSeries(PREFIX.*.loopMonitor.postAuctionLoop.mean),-2,-1)",
+                "aliasByNode(maxSeries(PREFIX.*.loopMonitor.logger.mean),-2,-1)",
+                "scale(PREFIX.router.auctionKeepPercentage.mean,0.01)",
+            ]
+        },
+        {
+            title: "Timing", vtitle: "Ms", hideLegend: "false",
+            target: [
+                "aliasByNode(averageSeries(PREFIX.router.*.auctionNetworkLatencyMs.mean),-2,-1)",
+                "aliasByNode(averageSeries(PREFIX.router.*.auctionNetworkLatencyMs.upper_98),-2,-1)",
+                "aliasByNode(averageSeries(PREFIX.router.*.auctionTotalTimeMs.mean),-2,-1)",
+                "aliasByNode(averageSeries(PREFIX.router.*.auctionTotalTimeMs.upper_98),-2,-1)",
+            ]
+        },
+        {
+            title: "Augmentors", vtitle: "QPS", areaMode: "first",
+            target: [
+                "aliasByNode(sum(*.*.*.router.augmentationLoop.augmentor.*.request),-2,-1)",
+                "aliasByNode(sum(*.*.*.router.augmentationLoop.augmentor.*.validResponse),-2,-1)",
+                "aliasByNode(sum(*.*.*.router.augmentationLoop.augmentor.*.expiredTooLate),-2,-1)",
+                "aliasByNode(sum(*.*.*.router.augmentationLoop.augmentor.*.skippedTooManyInFlight),-2,-1)",
+                "aliasByNode(sum(drawAsInfinite(*.*.*.router.augmentationLoop.augmentor.*.configured)),-1)",
+            ]
+        },
+        {
+            title: "Pipeline: Filters", vtitle: "events", 
+            target: [
+                "aliasByNode(scale(sum(*.*.*.router.accounts.*.*.filter.intoDynamicFilters),10),-1)",
+                "aliasByNode(scale(sum(*.*.*.router.accounts.*.*.filter.passedDynamicFilters),10),-1)",
+            ]
+        },
+        {
+            title: "Pipeline: Bids", vtitle: "events", 
+            target: [
+                "aliasByNode(sum(*.*.*.router.bid),-1)",
+                "aliasByNode(sum(*.*.*.postAuction.bidResult.WIN.messagesReceived),-2,-1)",
+                "aliasByNode(sum(*.*.*.postAuction.bidResult.WIN.delivered),-2,-1)",
+            ]
+        },
     ];
 
     $(function() {
