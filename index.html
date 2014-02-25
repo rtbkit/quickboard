@@ -1,4 +1,3 @@
-
 <html>
 <head>
     <title>RTBkit Quickboard</title>
@@ -67,26 +66,26 @@
         {
             title: "Augmentors", vtitle: "QPS", areaMode: "first",
             target: [
-                "aliasByNode(sum(*.*.*.router.augmentationLoop.augmentor.*.request),-2,-1)",
-                "aliasByNode(sum(*.*.*.router.augmentationLoop.augmentor.*.validResponse),-2,-1)",
-                "aliasByNode(sum(*.*.*.router.augmentationLoop.augmentor.*.expiredTooLate),-2,-1)",
-                "aliasByNode(sum(*.*.*.router.augmentationLoop.augmentor.*.skippedTooManyInFlight),-2,-1)",
+                "aliasByNode(sum(PREFIX.router.augmentationLoop.augmentor.*.request),-2,-1)",
+                "aliasByNode(sum(PREFIX.router.augmentationLoop.augmentor.*.validResponse),-2,-1)",
+                "aliasByNode(sum(PREFIX.router.augmentationLoop.augmentor.*.expiredTooLate),-2,-1)",
+                "aliasByNode(sum(PREFIX.router.augmentationLoop.augmentor.*.skippedTooManyInFlight),-2,-1)",
                 "aliasByNode(sum(drawAsInfinite(*.*.*.router.augmentationLoop.augmentor.*.configured)),-1)",
             ]
         },
         {
             title: "Pipeline: Filters", vtitle: "events", 
             target: [
-                "aliasByNode(scale(sum(*.*.*.router.accounts.*.*.filter.intoDynamicFilters),10),-1)",
-                "aliasByNode(scale(sum(*.*.*.router.accounts.*.*.filter.passedDynamicFilters),10),-1)",
+                "aliasByNode(scale(sum(PREFIX.router.accounts.*.*.filter.intoDynamicFilters),10),-1)",
+                "aliasByNode(scale(sum(PREFIX.router.accounts.*.*.filter.passedDynamicFilters),10),-1)",
             ]
         },
         {
             title: "Pipeline: Bids", vtitle: "events", 
             target: [
-                "aliasByNode(sum(*.*.*.router.bid),-1)",
-                "aliasByNode(sum(*.*.*.postAuction.bidResult.WIN.messagesReceived),-2,-1)",
-                "aliasByNode(sum(*.*.*.postAuction.bidResult.WIN.delivered),-2,-1)",
+                "aliasByNode(sum(PREFIX.router.bid),-1)",
+                "aliasByNode(sum(PREFIX.postAuction.bidResult.WIN.messagesReceived),-2,-1)",
+                "aliasByNode(sum(PREFIX.postAuction.bidResult.WIN.delivered),-2,-1)",
             ]
         },
     ];
