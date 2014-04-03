@@ -84,8 +84,8 @@
             title: "Pipeline: Bids", vtitle: "events", 
             target: [
                 "aliasByNode(sum(PREFIX.router.bid),-1)",
-                "aliasByNode(sum(PREFIX.postAuction.bidResult.WIN.messagesReceived),-2,-1)",
-                "aliasByNode(sum(PREFIX.postAuction.bidResult.WIN.delivered),-2,-1)",
+                "aliasByNode(sum(PREFIX.PostAuctionLoop.bidResult.WIN.messagesReceived),-2,-1)",
+                "aliasByNode(sum(PREFIX.PostAuctionLoop.bidResult.WIN.delivered),-2,-1)",
             ]
         },
     ];
