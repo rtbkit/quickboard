@@ -30,17 +30,17 @@
         {
             title: "Bid Request Volume", vtitle: "QPS", yMin: 0, areaMode: "stacked",
             target: [
-                "aliasByNode(drawAsInfinite(sum(PREFIX.router.routerUp)),-1)",
-                "groupByNode(PREFIX.router.exchange.*.requests,1,'sumSeries')"
+                "aliasByNode(drawAsInfinite(sum(PREFIX.*.routerUp)),-1)",
+                "groupByNode(PREFIX.*.exchange.*.requests,1,'sumSeries')"
             ]
         },
         {
             title: "Monitor", vtitle: "QPS", yMin: 0, areaMode: "all",
             target: [
-                "aliasByNode(sum(PREFIX.router.monitor.ignoredAuctions),-1)",
-                "aliasByNode(sum(PREFIX.router.*.auctionStart),-1)",
-                "aliasByNode(drawAsInfinite(sum(PREFIX.router.monitor.systemInSlowMode)),-1)",
-                "aliasByNode(drawAsInfinite(sum(PREFIX.router.routerUp)),-1)",
+                "aliasByNode(sum(PREFIX.*.monitor.ignoredAuctions),-1)",
+                "aliasByNode(sum(PREFIX.*.*.auctionStart),-1)",
+                "aliasByNode(drawAsInfinite(sum(PREFIX.*.monitor.systemInSlowMode)),-1)",
+                "aliasByNode(drawAsInfinite(sum(PREFIX.*.routerUp)),-1)",
             ]
         },
         {
@@ -51,41 +51,41 @@
                 "aliasByNode(maxSeries(PREFIX.*.loopMonitor.augmentationLoop.mean),-2,-1)",
                 "aliasByNode(maxSeries(PREFIX.*.loopMonitor.postAuctionLoop.mean),-2,-1)",
                 "aliasByNode(maxSeries(PREFIX.*.loopMonitor.logger.mean),-2,-1)",
-                "scale(PREFIX.router.auctionKeepPercentage.mean,0.01)",
+                "scale(PREFIX.*.auctionKeepPercentage.mean,0.01)",
             ]
         },
         {
             title: "Timing", vtitle: "Ms", hideLegend: "false",
             target: [
-                "aliasByNode(averageSeries(PREFIX.router.*.auctionNetworkLatencyMs.mean),-2,-1)",
-                "aliasByNode(averageSeries(PREFIX.router.*.auctionNetworkLatencyMs.upper_98),-2,-1)",
-                "aliasByNode(averageSeries(PREFIX.router.*.auctionTotalTimeMs.mean),-2,-1)",
-                "aliasByNode(averageSeries(PREFIX.router.*.auctionTotalTimeMs.upper_98),-2,-1)",
+                "aliasByNode(averageSeries(PREFIX.*.*.auctionNetworkLatencyMs.mean),-2,-1)",
+                "aliasByNode(averageSeries(PREFIX.*.*.auctionNetworkLatencyMs.upper_98),-2,-1)",
+                "aliasByNode(averageSeries(PREFIX.*.*.auctionTotalTimeMs.mean),-2,-1)",
+                "aliasByNode(averageSeries(PREFIX.*.*.auctionTotalTimeMs.upper_98),-2,-1)",
             ]
         },
         {
             title: "Augmentors", vtitle: "QPS", areaMode: "first",
             target: [
-                "aliasByNode(sum(PREFIX.router.augmentationLoop.augmentor.*.request),-2,-1)",
-                "aliasByNode(sum(PREFIX.router.augmentationLoop.augmentor.*.validResponse),-2,-1)",
-                "aliasByNode(sum(PREFIX.router.augmentationLoop.augmentor.*.expiredTooLate),-2,-1)",
-                "aliasByNode(sum(PREFIX.router.augmentationLoop.augmentor.*.skippedTooManyInFlight),-2,-1)",
+                "aliasByNode(sum(PREFIX.*.augmentationLoop.augmentor.*.request),-2,-1)",
+                "aliasByNode(sum(PREFIX.*.augmentationLoop.augmentor.*.validResponse),-2,-1)",
+                "aliasByNode(sum(PREFIX.*.augmentationLoop.augmentor.*.expiredTooLate),-2,-1)",
+                "aliasByNode(sum(PREFIX.*.augmentationLoop.augmentor.*.skippedTooManyInFlight),-2,-1)",
                 "aliasByNode(sum(drawAsInfinite(*.*.*.router.augmentationLoop.augmentor.*.configured)),-1)",
             ]
         },
         {
             title: "Pipeline: Filters", vtitle: "events", 
             target: [
-                "aliasByNode(scale(sum(PREFIX.router.accounts.*.*.filter.intoDynamicFilters),10),-1)",
-                "aliasByNode(scale(sum(PREFIX.router.accounts.*.*.filter.passedDynamicFilters),10),-1)",
+                "aliasByNode(scale(sum(PREFIX.*.accounts.*.*.filter.intoDynamicFilters),10),-1)",
+                "aliasByNode(scale(sum(PREFIX.*.accounts.*.*.filter.passedDynamicFilters),10),-1)",
             ]
         },
         {
             title: "Pipeline: Bids", vtitle: "events", 
             target: [
-                "aliasByNode(sum(PREFIX.router.bid),-1)",
-                "aliasByNode(sum(PREFIX.PostAuctionLoop.bidResult.WIN.messagesReceived),-2,-1)",
-                "aliasByNode(sum(PREFIX.PostAuctionLoop.bidResult.WIN.delivered),-2,-1)",
+                "aliasByNode(sum(PREFIX.*.bid),-1)",
+                "aliasByNode(sum(PREFIX.*.bidResult.WIN.messagesReceived),-2,-1)",
+                "aliasByNode(sum(PREFIX.*.bidResult.WIN.delivered),-2,-1)",
             ]
         },
     ];
